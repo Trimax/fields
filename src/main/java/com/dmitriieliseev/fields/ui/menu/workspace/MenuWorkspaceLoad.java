@@ -10,16 +10,15 @@ import java.awt.event.ActionListener;
 
 @Slf4j
 @Component
-public class MenuWorkspaceClose extends JMenuItem implements ActionListener {
+public class MenuWorkspaceLoad extends JMenuItem implements ActionListener {
     @PostConstruct
     void construct() {
-        setText("Close");
+        setText("Load");
         addActionListener(this);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        log.info("Close workspace");
-        System.exit(0);
+        log.info("Load workspace");
     }
 }
