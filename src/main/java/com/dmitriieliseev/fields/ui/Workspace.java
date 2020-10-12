@@ -10,6 +10,7 @@ import javax.swing.*;
 @AllArgsConstructor
 public class Workspace extends JFrame {
     private MenuBar menuBar;
+    private Viewport viewport;
 
     @PostConstruct
     void construct() {
@@ -18,21 +19,7 @@ public class Workspace extends JFrame {
         setSize(800, 600);
         setLocationRelativeTo(null);
         setJMenuBar(menuBar);
-    }
 
-    private void createLayout(JComponent... arg) {
-        var pane = getContentPane();
-        var gl = new GroupLayout(pane);
-        pane.setLayout(gl);
-
-        gl.setAutoCreateContainerGaps(true);
-
-        gl.setHorizontalGroup(gl.createSequentialGroup()
-                .addComponent(arg[0])
-        );
-
-        gl.setVerticalGroup(gl.createSequentialGroup()
-                .addComponent(arg[0])
-        );
+        add(viewport);
     }
 }
