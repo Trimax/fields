@@ -16,15 +16,23 @@ public class Camera {
     private Vector2D viewport = dimension;
     private double zoom = 100.0;
 
+    public Vector2D getPosition() {
+        return position;
+    }
+
+    public Vector2D getViewport() {
+        return viewport;
+    }
+
     public void setViewportSize(Dimension dimension) {
         this.dimension = new Vector2D(dimension.getWidth(), dimension.getHeight());
-        this.viewport = new Vector2D(dimension.getWidth(), dimension.getHeight()).normalize().scalarMultiply(this.zoom);
+        this.viewport = new Vector2D(dimension.getWidth(), dimension.getHeight()); //.normalize().scalarMultiply(this.zoom);
         log.info("Camera viewport changed. Position: {}; Viewport: {}; Zoom: {}", this.position, this.viewport, this.zoom);
     }
 
     public void zoom(double zoom) {
         this.zoom = Math.max(1.0, Math.min(100.0, this.zoom + 0.1 * zoom));
-        this.viewport = new Vector2D(this.dimension.getX(), this.dimension.getY()).normalize().scalarMultiply(this.zoom);
+       // this.viewport = new Vector2D(this.dimension.getX(), this.dimension.getY()).normalize().scalarMultiply(this.zoom);
         log.info("Camera zoom changed. Position: {}; Viewport: {}; Zoom: {}", this.position, this.viewport, this.zoom);
     }
 
