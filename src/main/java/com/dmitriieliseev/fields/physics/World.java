@@ -9,10 +9,9 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Stream;
+import java.util.Map;
 
 @Slf4j
 @Getter
@@ -71,14 +70,11 @@ public class World {
     }
 
     public void update() {
-        Map<String, Vector2D> forcesMap = StreamEx.of(bodies).toMap(Body::getId, this::getForce);
+        Map<String, Vector2D> forcesMap = StreamEx.of(bodies).parallel().toMap(Body::getId, this::getForce);
 
-        for (Body body : bodies) {
-            Vector2D acceleration = forcesMap.get(body.getId()).scalarMultiply(1.0 / body.getMass());
-            body.setVelocity(body.getVelocity().add(acceleration));
-            body.setPosition(body.getPosition().add(body.getVelocity()));
-        }
-
+        StreamEx.of(bodies)
+                .parallel()
+                .forEach(body -> body.apply(forcesMap.get(body.getId())));
 //
 //
 //        for (Body body : bodies) {

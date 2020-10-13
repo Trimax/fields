@@ -18,4 +18,10 @@ public class Body implements Massive, Volumetric {
     private Vector2D position;
     private Vector2D velocity;
     private Vector2D size;
+
+    public void apply(Vector2D force) {
+        Vector2D acceleration = force.scalarMultiply(1.0 / mass);
+        this.velocity = this.velocity.add(acceleration);
+        this.position = this.position.add(velocity);
+    }
 }
