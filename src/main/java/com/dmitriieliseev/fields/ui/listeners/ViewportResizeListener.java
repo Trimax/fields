@@ -14,6 +14,7 @@ import java.util.function.Supplier;
 @RequiredArgsConstructor
 public class ViewportResizeListener implements ComponentListener {
     private final Camera camera;
+
     private Supplier<Dimension> viewportSizeSupplier;
 
     public void setViewportSizeSupplier(Supplier<Dimension> viewportSizeSupplier) {

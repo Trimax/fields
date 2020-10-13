@@ -17,8 +17,8 @@ import java.util.function.Consumer;
 @RequiredArgsConstructor
 public class CameraMoveListener implements MouseMotionListener, MouseListener {
     private final Camera camera;
-    private Consumer<Cursor> cursorConsumer;
 
+    private Consumer<Cursor> cursorConsumer;
     private Vector2D origin = Vector2D.ZERO;
 
     public void setCursorConsumer(Consumer<Cursor> cursorConsumer) {
