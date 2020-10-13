@@ -13,10 +13,10 @@ import javax.swing.*;
 @Component
 @AllArgsConstructor
 public class MenuWorkspace extends JMenu {
-    private MenuWorkspaceNew menuWorkspaceNew;
-    private MenuWorkspaceSave menuWorkspaceSave;
-    private MenuWorkspaceLoad menuWorkspaceLoad;
-    private MenuWorkspaceClose menuWorkspaceClose;
+    private final MenuWorkspaceNew menuWorkspaceNew;
+    private final MenuWorkspaceSave menuWorkspaceSave;
+    private final MenuWorkspaceLoad menuWorkspaceLoad;
+    private final MenuWorkspaceClose menuWorkspaceClose;
 
     @PostConstruct
     void construct() {

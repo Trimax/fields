@@ -10,8 +10,8 @@ import javax.swing.*;
 @Component
 @AllArgsConstructor
 public class Workspace extends JFrame {
-    private MenuBar menuBar;
-    private Viewport viewport;
+    private final MenuBar menuBar;
+    private final Viewport viewport;
 
     @PostConstruct
     void construct() {

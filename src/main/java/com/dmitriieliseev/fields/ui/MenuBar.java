@@ -11,8 +11,8 @@ import javax.swing.*;
 @Component
 @AllArgsConstructor
 public class MenuBar extends JMenuBar {
-    private MenuWorkspace menuWorkspace;
-    private MenuSimulation menuSimulation;
+    private final MenuWorkspace menuWorkspace;
+    private final MenuSimulation menuSimulation;
 
     @PostConstruct
     void construct() {
