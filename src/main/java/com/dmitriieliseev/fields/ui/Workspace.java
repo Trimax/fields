@@ -1,5 +1,6 @@
 package com.dmitriieliseev.fields.ui;
 
+import com.dmitriieliseev.fields.common.Definitions;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,7 @@ public class Workspace extends JFrame {
     void construct() {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setTitle("Fields simulation");
-        setSize(800, 600);
+        setSize((int) Definitions.viewportSize.getX(), (int) Definitions.viewportSize.getY());
         setLocationRelativeTo(null);
         setJMenuBar(menuBar);
 
