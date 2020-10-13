@@ -39,34 +39,34 @@ public class World {
         bodies.add(Body.builder()
                 .mass(2500.0)
                 .color(Color.RED)
-                .position(new Vector2D(-100, -100))
+                .position(new Vector2D(-100, 0))
                 .size(new Vector2D(0.1, 0.1))
-                .velocity(Vector2D.ZERO)
+                .velocity(new Vector2D(0.0, 0.1))
                 .build());
 
         bodies.add(Body.builder()
                 .mass(2500.0)
                 .color(Color.YELLOW)
-                .position(new Vector2D(100, -100))
+                .position(new Vector2D(100, 0))
                 .size(new Vector2D(0.1, 0.1))
-                .velocity(Vector2D.ZERO)
+                .velocity(new Vector2D(0.0, -0.1))
                 .build());
 
-        bodies.add(Body.builder()
-                .mass(2500.0)
-                .color(Color.WHITE)
-                .position(new Vector2D(100, 100))
-                .size(new Vector2D(0.1, 0.1))
-                .velocity(Vector2D.ZERO)
-                .build());
-
-        bodies.add(Body.builder()
-                .mass(2500.0)
-                .color(Color.GREEN)
-                .position(new Vector2D(-100, 100))
-                .size(new Vector2D(0.1, 0.1))
-                .velocity(Vector2D.ZERO)
-                .build());
+//        bodies.add(Body.builder()
+//                .mass(2500.0)
+//                .color(Color.WHITE)
+//                .position(new Vector2D(100, 100))
+//                .size(new Vector2D(0.1, 0.1))
+//                .velocity(Vector2D.ZERO)
+//                .build());
+//
+//        bodies.add(Body.builder()
+//                .mass(2500.0)
+//                .color(Color.GREEN)
+//                .position(new Vector2D(-100, 100))
+//                .size(new Vector2D(0.1, 0.1))
+//                .velocity(Vector2D.ZERO)
+//                .build());
     }
 
     public void update() {
