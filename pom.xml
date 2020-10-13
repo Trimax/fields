@@ -42,6 +42,13 @@
             <artifactId>commons-math3</artifactId>
             <version>3.2</version>
         </dependency>
+
+        <!-- Stream Ex -->
+        <dependency>
+            <groupId>one.util</groupId>
+            <artifactId>streamex</artifactId>
+            <version>0.7.3</version>
+        </dependency>
     </dependencies>
 
     <build>

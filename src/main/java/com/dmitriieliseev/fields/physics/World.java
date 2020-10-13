@@ -3,14 +3,16 @@ package com.dmitriieliseev.fields.physics;
 import com.dmitriieliseev.fields.model.Body;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
+import one.util.streamex.StreamEx;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
 import java.awt.*;
-import java.util.ArrayList;
+import java.util.*;
 import java.util.List;
-import java.util.Random;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 @Slf4j
 @Getter
@@ -22,35 +24,101 @@ public class World {
     void construct() {
         log.info("World constructed");
 
-        Random random = new Random();
-        for (int i = 0; i < 1000; i++) {
-            Body body = Body.builder()
-                    .mass(1.0)
-                    .color(new Color(55 + random.nextInt(200), 55 + random.nextInt(200), 55 + random.nextInt(200)))
-                    .position(new Vector2D(100 - random.nextInt(200), 100 - random.nextInt(200)))
-                    .velocity(new Vector2D(0.5 - random.nextDouble(), 0.5 - random.nextDouble()))
-                    .size(new Vector2D(0.1, 0.1))
-                    .build();
+//        Random random = new Random();
+//        for (int i = 0; i < 10; i++) {
+//            Body body = Body.builder()
+//                    .mass(2500.0)
+//                    .color(new Color(55 + random.nextInt(200), 55 + random.nextInt(200), 55 + random.nextInt(200)))
+//                    .position(new Vector2D(100 - random.nextInt(200), 100 - random.nextInt(200)))
+//                    .velocity(new Vector2D(0.1 - random.nextDouble() * 0.2, 0.1 - random.nextDouble() * 0.2))
+//                    .size(new Vector2D(0.1, 0.1))
+//                    .build();
+//
+//            bodies.add(body);
+//        }
 
-            bodies.add(body);
-        }
+        bodies.add(Body.builder()
+                .mass(2500.0)
+                .color(Color.RED)
+                .position(new Vector2D(-100, -100))
+                .size(new Vector2D(0.1, 0.1))
+                .velocity(Vector2D.ZERO)
+                .build());
+
+        bodies.add(Body.builder()
+                .mass(2500.0)
+                .color(Color.YELLOW)
+                .position(new Vector2D(100, -100))
+                .size(new Vector2D(0.1, 0.1))
+                .velocity(Vector2D.ZERO)
+                .build());
+
+        bodies.add(Body.builder()
+                .mass(2500.0)
+                .color(Color.WHITE)
+                .position(new Vector2D(100, 100))
+                .size(new Vector2D(0.1, 0.1))
+                .velocity(Vector2D.ZERO)
+                .build());
+
+        bodies.add(Body.builder()
+                .mass(2500.0)
+                .color(Color.GREEN)
+                .position(new Vector2D(-100, 100))
+                .size(new Vector2D(0.1, 0.1))
+                .velocity(Vector2D.ZERO)
+                .build());
     }
 
     public void update() {
-        for (Body body : bodies) {
-            body.setPosition(body.getPosition().add(body.getVelocity()));
+        Map<String, Vector2D> forcesMap = StreamEx.of(bodies).toMap(Body::getId, this::getForce);
 
-//            if (body.getPosition().getX() > 150)
-//                body.setVelocity(new Vector2D(-body.getVelocity().getX(), body.getVelocity().getY()));
-//
-//            if (body.getPosition().getX() < 150)
-//                body.setVelocity(new Vector2D(-body.getVelocity().getX(), body.getVelocity().getY()));
-//
-//            if (body.getPosition().getY() > 150)
-//                body.setVelocity(new Vector2D(body.getVelocity().getX(), -body.getVelocity().getY()));
-//
-//            if (body.getPosition().getY() < -150)
-//                body.setVelocity(new Vector2D(body.getVelocity().getX(), -body.getVelocity().getY()));
+        for (Body body : bodies) {
+            Vector2D acceleration = forcesMap.get(body.getId()).scalarMultiply(1.0 / body.getMass());
+            body.setVelocity(body.getVelocity().add(acceleration));
+            body.setPosition(body.getPosition().add(body.getVelocity()));
         }
+
+//
+//
+//        for (Body body : bodies) {
+//            body.setPosition(body.getPosition().add(body.getVelocity()));
+//
+////            if (body.getPosition().getX() > 150)
+////                body.setVelocity(new Vector2D(-body.getVelocity().getX(), body.getVelocity().getY()));
+////
+////            if (body.getPosition().getX() < 150)
+////                body.setVelocity(new Vector2D(-body.getVelocity().getX(), body.getVelocity().getY()));
+////
+////            if (body.getPosition().getY() > 150)
+////                body.setVelocity(new Vector2D(body.getVelocity().getX(), -body.getVelocity().getY()));
+////
+////            if (body.getPosition().getY() < -150)
+////                body.setVelocity(new Vector2D(body.getVelocity().getX(), -body.getVelocity().getY()));
+//        }
+    }
+
+    private Vector2D getForce(Body body) {
+        Vector2D force = Vector2D.ZERO;
+
+        for (Body currentBody : bodies) {
+            if (currentBody == body)
+                continue;
+
+            double distance = Vector2D.distanceSq(body.getPosition(), currentBody.getPosition());
+            if (distance < 0.01) {
+                continue;
+            }
+
+            Vector2D currentForce = currentBody
+                    .getPosition()
+                    .subtract(body.getPosition())
+                    .normalize()
+                    .scalarMultiply((0.01 * body.getMass() * currentBody.getMass()) / distance);
+
+            force = force.add(currentForce);
+        }
+
+        return force;
     }
 }

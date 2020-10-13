@@ -7,10 +7,12 @@ import lombok.Data;
 import org.apache.commons.math3.geometry.euclidean.twod.Vector2D;
 
 import java.awt.*;
+import java.util.UUID;
 
 @Data
 @Builder
 public class Body implements Massive, Volumetric {
+    private final String id = UUID.randomUUID().toString();
     private final double mass;
     private final Color color;
     private Vector2D position;
